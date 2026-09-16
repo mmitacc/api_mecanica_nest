@@ -3,9 +3,9 @@ import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { PrismaModule } from './prisma/prisma.module.js';
-import { DetalleServicioController } from './detalle_servicio/detalle_servicio.controller.js';
-import { DetalleServicioService } from './detalle_servicio/detalle_servicio.service.js';
 import { DetalleServicioModule } from './detalle_servicio/detalle_servicio.module.js';
+import { OrdenServicioModule } from './orden-servicio/orden-servicio.module.js';
+import { UsuarioModule } from './usuario/usuario.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -20,6 +20,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     }),
     PrismaModule,
     DetalleServicioModule
+    OrdenServicioModule,
+    UsuarioModule,
   ],
   controllers: [AppController, DetalleServicioController],
   providers: [AppService, DetalleServicioService],
