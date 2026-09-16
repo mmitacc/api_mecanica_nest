@@ -6,13 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { OrdenService } from './orden-servicio.service.js';
 import { CreateOrdenDto } from './dto/create-orden.dto.js';
 import { UpdateOrdenDto } from './dto/update-orden.dto.js';
+import { inputFechas } from './dto/reporte-orden.dto.js';
 
 @Controller('ordenes')
-export class ProductsController {
+export class OrdenServicioController {
   constructor(private readonly ordenesService: OrdenService) {}
 
   @Post() //req.body
@@ -38,5 +40,10 @@ export class ProductsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.ordenesService.remove(+id);
+  }
+
+  @Get('/reporte')
+  getReporte(@Body() fechas: inputFechas) {
+    return this.ordenesService.getReporte(new inputFechas);
   }
 }
