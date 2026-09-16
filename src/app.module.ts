@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { ProductsModule } from './products/products.module.js';
-import { UsersModule } from './users/users.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
+import { DetalleServicioController } from './detalle_servicio/detalle_servicio.controller.js';
+import { DetalleServicioService } from './detalle_servicio/detalle_servicio.service.js';
+import { DetalleServicioModule } from './detalle_servicio/detalle_servicio.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -17,11 +18,10 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       appSecret: 'YOUR_APP_SECRET',
       serviceId: 'first-app',
     }),
-    ProductsModule,
-    UsersModule,
     PrismaModule,
+    DetalleServicioModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, DetalleServicioController],
+  providers: [AppService, DetalleServicioService],
 })
 export class AppModule {}

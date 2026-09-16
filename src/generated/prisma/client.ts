@@ -12,6 +12,8 @@
 
 import * as process from 'node:process'
 import * as path from 'node:path'
+import { fileURLToPath } from 'node:url'
+globalThis['__dirname'] = path.dirname(fileURLToPath(import.meta.url))
 
 import * as runtime from "@prisma/client/runtime/client"
 import * as $Enums from "./enums.js"
@@ -29,8 +31,8 @@ export * from "./enums.js"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Usuarios
+ * const usuarios = await prisma.usuario.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -40,12 +42,32 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model User
+ * Model Usuario
  * 
  */
-export type User = Prisma.UserModel
+export type Usuario = Prisma.UsuarioModel
 /**
- * Model Product
+ * Model OrdenServicio
  * 
  */
-export type Product = Prisma.ProductModel
+export type OrdenServicio = Prisma.OrdenServicioModel
+/**
+ * Model Vehiculo
+ * 
+ */
+export type Vehiculo = Prisma.VehiculoModel
+/**
+ * Model DetalleServicio
+ * 
+ */
+export type DetalleServicio = Prisma.DetalleServicioModel
+/**
+ * Model Repuesto
+ * 
+ */
+export type Repuesto = Prisma.RepuestoModel
+/**
+ * Model Cliente
+ * 
+ */
+export type Cliente = Prisma.ClienteModel
