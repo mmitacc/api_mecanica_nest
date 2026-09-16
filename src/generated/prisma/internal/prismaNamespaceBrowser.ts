@@ -51,8 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User',
-  Product: 'Product'
+  Usuario: 'Usuario',
+  OrdenServicio: 'OrdenServicio',
+  Vehiculo: 'Vehiculo',
+  DetalleServicio: 'DetalleServicio',
+  Repuesto: 'Repuesto',
+  Cliente: 'Cliente'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -71,27 +75,77 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserScalarFieldEnum = {
+export const UsuarioScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  nombres: 'nombres',
+  apellidos: 'apellidos',
   email: 'email',
   password: 'password',
-  creadoEn: 'creadoEn'
+  role: 'role',
+  fechacreacion: 'fechacreacion'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
 
 
-export const ProductScalarFieldEnum = {
+export const OrdenServicioScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  price: 'price',
-  description: 'description',
-  stock: 'stock',
-  creadoEn: 'creadoEn'
+  descripcion: 'descripcion',
+  costomecanico: 'costomecanico',
+  estado: 'estado',
+  total: 'total',
+  idUsuario: 'idUsuario',
+  idVehiculo: 'idVehiculo',
+  fechacreacion: 'fechacreacion'
 } as const
 
-export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+export type OrdenServicioScalarFieldEnum = (typeof OrdenServicioScalarFieldEnum)[keyof typeof OrdenServicioScalarFieldEnum]
+
+
+export const VehiculoScalarFieldEnum = {
+  id: 'id',
+  placa: 'placa',
+  marca: 'marca',
+  modelo: 'modelo',
+  idCliente: 'idCliente',
+  fechacreacion: 'fechacreacion'
+} as const
+
+export type VehiculoScalarFieldEnum = (typeof VehiculoScalarFieldEnum)[keyof typeof VehiculoScalarFieldEnum]
+
+
+export const DetalleServicioScalarFieldEnum = {
+  id: 'id',
+  cantidad: 'cantidad',
+  subTotal: 'subTotal',
+  fechacreacion: 'fechacreacion',
+  idOrdenServicio: 'idOrdenServicio',
+  idRepuesto: 'idRepuesto'
+} as const
+
+export type DetalleServicioScalarFieldEnum = (typeof DetalleServicioScalarFieldEnum)[keyof typeof DetalleServicioScalarFieldEnum]
+
+
+export const RepuestoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  precio_unid: 'precio_unid',
+  stock: 'stock',
+  fechacreacion: 'fechacreacion'
+} as const
+
+export type RepuestoScalarFieldEnum = (typeof RepuestoScalarFieldEnum)[keyof typeof RepuestoScalarFieldEnum]
+
+
+export const ClienteScalarFieldEnum = {
+  id: 'id',
+  nombres: 'nombres',
+  apellidos: 'apellidos',
+  email: 'email',
+  fechacreacion: 'fechacreacion'
+} as const
+
+export type ClienteScalarFieldEnum = (typeof ClienteScalarFieldEnum)[keyof typeof ClienteScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -108,12 +162,4 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
