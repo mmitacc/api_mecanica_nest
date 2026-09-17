@@ -7,7 +7,7 @@ import {
   IsPositive,
   IsOptional,
   IsInt,
-  IsIn
+  IsIn,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { EstadoServicio } from '../../generated/prisma/enums.js';
@@ -30,7 +30,10 @@ export class CreateOrdenDto {
   costomecanico?: number;
   @IsOptional()
   @IsString({ message: 'El estado debe ser una cadena de texto' })
-  @IsIn(['RECEPCIONADO', 'EN_REPARACION', 'LISTO'], { each: true, message: 'Estado inválido' })
+  @IsIn(['RECEPCIONADO', 'EN_REPARACION', 'LISTO'], {
+    each: true,
+    message: 'Estado inválido',
+  })
   estado?: EstadoServicio;
   @IsOptional()
   @Type(() => Number)
@@ -42,12 +45,12 @@ export class CreateOrdenDto {
   total?: number;
   @IsNotEmpty({ message: 'El idUsuario es obligatorio' })
   @Type(() => Number)
-  @IsInt({message : "El idUsuario debe ser un entero"})
+  @IsInt({ message: 'El idUsuario debe ser un entero' })
   @IsPositive({ message: 'El idUsuario debe ser positivo' })
   idUsuario: number;
   @IsNotEmpty({ message: 'El idVehiculo es obligatorio' })
   @Type(() => Number)
-  @IsInt({message : "El idUsuario debe ser un entero"})
+  @IsInt({ message: 'El idUsuario debe ser un entero' })
   @IsPositive({ message: 'El idUsuario debe ser positivo' })
   idVehiculo: number;
 }

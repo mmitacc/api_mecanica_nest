@@ -9,98 +9,75 @@ import { inputFechas } from './dto/reporte-orden.dto.js';
 export class OrdenService {
   constructor(private readonly prisma: PrismaService) {}
   async create(createOrdenDto: CreateOrdenDto) {
-    try {
-      return await this.prisma.ordenServicio.create({
-        data: createOrdenDto,
-      });
-    } catch (error) {
-      return error;
-    }
+    return await this.prisma.ordenServicio.create({
+      data: createOrdenDto,
+    });
   }
 
   async findAll() {
-    try {
-      return this.prisma.ordenServicio.findMany({
-        orderBy: { id: 'asc' },
-      });
-    } catch (error) {
-      return error;
-    }
+    return this.prisma.ordenServicio.findMany({
+      orderBy: { id: 'asc' },
+    });
   }
 
   async findOne(id: number) {
-    try {
-      const user = await this.prisma.ordenServicio.findUnique({
-        where: { id },
-      });
-      if (!user) {
-        throw new NotFoundException(`Orden de ID: ${id} no encontrado`);
-      }
-      return user;
-    } catch (error) {
-      return error;
+    const user = await this.prisma.ordenServicio.findUnique({
+      where: { id },
+    });
+    if (!user) {
+      throw new NotFoundException(`Orden de ID: ${id} no encontrado`);
     }
+    return user;
   }
 
   async update(id: number, UpdateOrdenDto: UpdateOrdenDto) {
-    try {
-      return await this.prisma.ordenServicio.update({
-        where: { id },
-        data: UpdateOrdenDto,
-      });
-    } catch (error) {
-      return error;
-    }
+    return await this.prisma.ordenServicio.update({
+      where: { id },
+      data: UpdateOrdenDto,
+    });
   }
 
   async remove(id: number) {
-    try {
-      const user = await this.prisma.ordenServicio.findUnique({
-        where: { id },
-      });
-      if (!user) {
-        throw new NotFoundException(`Orden de ID: ${id} no encontrado`);
-      }
-      return await this.prisma.ordenServicio.delete({
-        where: { id },
-      });
-    } catch (error) {
-      return error;
+    const user = await this.prisma.ordenServicio.findUnique({
+      where: { id },
+    });
+    if (!user) {
+      throw new NotFoundException(`Orden de ID: ${id} no encontrado`);
     }
+    return await this.prisma.ordenServicio.delete({
+      where: { id },
+    });
   }
 
-
- async getReporte(
-    fechas: inputFechas
-) {
+  async getReporte(fechas: inputFechas) {
     const where: Prisma.OrdenServicioWhereInput = {
-        fechacreacion: {
-            gte: new Date(fechas.minFecha).toISOString(),
-            lte: new Date(fechas.maxFecha).toISOString(),
-        },
-        estado: {
-            equals: "LISTO",
-        },
+      fechacreacion: {
+        gte: new Date(fechas.minFecha).toISOString(),
+        lt: new Date(fechas.maxFecha).toISOString(),
+      },
+      estado: {
+        equals: 'LISTO',
+      },
     };
 
     const [ordenes, totales] = await Promise.all([
-        this.prisma.ordenServicio.findMany({
-            where,
-        }),
+      this.prisma.ordenServicio.findMany({
+        where,
+      }),
 
-        this.prisma.ordenServicio.aggregate({
-            where,
-            _sum: {
-                total: true,
-                costomecanico: true,
-            },
-        }),
+      this.prisma.ordenServicio.aggregate({
+        where,
+        _sum: {
+          total: true,
+          costomecanico: true,
+        },
+      }),
     ]);
 
     return {
-        ordenes,
-        totalGeneral: totales._sum.total ?? 0,
-        totalCostoMecanico: totales._sum.costomecanico ?? 0,
+      ordenes,
+      totalGeneral: totales._sum.total ?? 0,
+      totalCostoMecanico: totales._sum.costomecanico ?? 0,
     };
-}
+  }
 }
