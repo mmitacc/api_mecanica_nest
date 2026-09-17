@@ -5,71 +5,78 @@ import { UpdateDetalleDto } from './dto/updatedetalle.dto.js';
 
 @Injectable()
 export class DetalleServicioService {
-    constructor(private readonly prisma:PrismaService){}
-    async findAll(){
-        try {
-            return this.prisma.detalleServicio.findMany()
-        } catch (error) {
-            return (`hubo un problema a al traer la tabla de destalles`)
-        }
+  constructor(private readonly prisma: PrismaService) {}
+  async findAll() {
+    return this.prisma.detalleServicio.findMany();
+  }
+  async findOne(id: number) {
+    const detalle = await this.prisma.detalleServicio.findUnique({
+      where: { id },
+    });
+    if (!detalle) {
+      throw new NotFoundException(`el detalle con id numero ${id} no exite`);
     }
-    async findOne(id:number){
-        try {
-            const detalle = await this.prisma.detalleServicio.findUnique({
-                where: {id}
-            })
-            if(!detalle){
-                throw new NotFoundException(`el detalle con id numero ${id} no exite`)
-            }
-            return detalle
-        } catch (error) {
-            return (`hubo un problema al intentar acceder a la tabla detalles`)
-        }
+    return detalle;
+  }
+  async create(CrateDetalleDto: CrateDetalleDto) {
+    const respuesto = await this.prisma.repuesto.findUnique({
+      where: { id: CrateDetalleDto.idRepuesto },
+    });
+    if (!respuesto) {
+      throw new NotFoundException(
+        `no se encontro el repuesto con id ${CrateDetalleDto.idRepuesto}`,
+      );
     }
-    async create(CrateDetalleDto: CrateDetalleDto){
-        try {
-            const respuesto = await this.prisma.repuesto.findUnique({
-                where: {id: CrateDetalleDto.idRepuesto}
-            })
-            if(!respuesto){
-                throw new NotFoundException(`no se encontro el repuesto con id ${CrateDetalleDto.idRepuesto}`)
-            }
-            const total =Number(respuesto.precio_unid) * CrateDetalleDto.cantidad
-            return await this.prisma.detalleServicio.create({
-                data: {
-                    cantidad:CrateDetalleDto.cantidad,
-                    idOrdenServicio: CrateDetalleDto.idOrdenServicio,
-                    idRepuesto: CrateDetalleDto.idRepuesto,
-                    subTotal:total
-                }
-            })
-        } catch (error) {
-            return (`hubo un problema al crear un nuevo detalle de Servicio`)
-        }
+    const servicio = await this.prisma.ordenServicio.findUnique({
+      where: { id: CrateDetalleDto.idOrdenServicio },
+    });
+    if (!servicio) {
+      throw new NotFoundException(
+        `no se encontro el la orden de servicio con id ${CrateDetalleDto.idOrdenServicio}`,
+      );
     }
-    async update(id:number, UpdateDetalleDto:UpdateDetalleDto){
-        try {
-            return await this.prisma.detalleServicio.update({
-                where: {id},
-                data: UpdateDetalleDto
-            })
-        } catch (error) {
-            return (`hubo un error al intentar actulizar la tabla detalle`)
-        }
+    const total = Number(respuesto.precio_unid) * CrateDetalleDto.cantidad;
+    return await this.prisma.detalleServicio.create({
+      data: {
+        cantidad: CrateDetalleDto.cantidad,
+        idOrdenServicio: CrateDetalleDto.idOrdenServicio,
+        idRepuesto: CrateDetalleDto.idRepuesto,
+        subTotal: total,
+      },
+    });
+  }
+  async update(id: number, UpdateDetalleDto: UpdateDetalleDto) {
+    const detalle = await this.prisma.detalleServicio.findUnique({
+      where: { id },
+    });
+    if (!detalle) {
+      throw new NotFoundException(`el detalle con id numero ${id} no exite`);
     }
-    async remove(id:number){
-        try {
-            const detalle = await this.prisma.detalleServicio.findUnique({
-                where: {id}
-            })
-            if(!detalle){
-                throw new NotFoundException(`el detalle con id ${id} no se encontro`)
-            }
-            return await this.prisma.detalleServicio.delete({
-                where: {id}
-            })
-        } catch (error) {
-            return (`se elimino con exito el detalle con id ${id} `)
-        }
+    const respuesto = await this.prisma.repuesto.findUnique({
+      where: { id: detalle.idRepuesto },
+    });
+    if (!respuesto) {
+      throw new NotFoundException(`no encontro el repuesto con id numero ${detalle.idRepuesto} no exite`);
     }
+    const cantidad = UpdateDetalleDto.cantidad ?? detalle.cantidad
+    const total = Number(respuesto.precio_unid) * cantidad
+    return await this.prisma.detalleServicio.update({
+      where: { id },
+      data:{
+        cantidad,
+        subTotal: total
+      },
+    });
+  }
+  async remove(id: number) {
+    const detalle = await this.prisma.detalleServicio.findUnique({
+      where: { id },
+    });
+    if (!detalle) {
+      throw new NotFoundException(`el detalle con id ${id} no se encontro`);
+    }
+    return await this.prisma.detalleServicio.delete({
+      where: { id },
+    });
+  }
 }
