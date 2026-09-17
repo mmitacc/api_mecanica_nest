@@ -4,6 +4,6 @@ import { OrdenService } from './orden-servicio.service.js';
 
 @Module({
   controllers: [OrdenServicioController],
-  providers: [OrdenService]
+  providers: [OrdenService],
 })
 export class OrdenServicioModule {}
