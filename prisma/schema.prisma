@@ -81,10 +81,10 @@ model Vehiculo {
 model DetalleServicio {
   id              Int      @id @default(autoincrement())
   cantidad        Int      @default(0)
-  subTotal        Decimal  @default(0.0)
+  subTotal        Decimal  @default(0.0) @map("subtotal")
   fechacreacion   DateTime @default(now())
-  idOrdenServicio Int
-  idRepuesto      Int
+  idOrdenServicio Int @map("id_ordenservicio")
+  idRepuesto      Int @map("id_repuesto")
 
   // Relacion de un detalle servicio pertenece a una orden servicio
   orden_servicios OrdenServicio @relation(fields: [idOrdenServicio], references: [id], onDelete: Restrict)
