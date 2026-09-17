@@ -6,6 +6,8 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { DetalleServicioModule } from './detalle_servicio/detalle_servicio.module.js';
 import { OrdenServicioModule } from './orden-servicio/orden-servicio.module.js';
 import { UsuarioModule } from './usuario/usuario.module.js';
+import { VehiculosModule } from './vehiculos/vehiculos.module.js';
+import { RepuestosModule } from './repuestos/repuestos.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -19,11 +21,13 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'first-app',
     }),
     PrismaModule,
-    DetalleServicioModule
+    DetalleServicioModule,
     OrdenServicioModule,
     UsuarioModule,
+    VehiculosModule,
+    RepuestosModule,
   ],
-  controllers: [AppController, DetalleServicioController],
-  providers: [AppService, DetalleServicioService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
