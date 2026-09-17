@@ -1,21 +1,8 @@
-/*
-  Warnings:
-
-  - You are about to drop the `productos` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `usuarios` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('MECANICO', 'RECEPCIONISTA', 'DUEÑO');
 
 -- CreateEnum
 CREATE TYPE "EstadoServicio" AS ENUM ('RECEPCIONADO', 'EN_REPARACION', 'LISTO');
-
--- DropTable
-DROP TABLE "productos";
-
--- DropTable
-DROP TABLE "usuarios";
 
 -- CreateTable
 CREATE TABLE "usuario" (
@@ -60,10 +47,10 @@ CREATE TABLE "vehiculo" (
 CREATE TABLE "detalle_servicio" (
     "id" SERIAL NOT NULL,
     "cantidad" INTEGER NOT NULL DEFAULT 0,
-    "subTotal" DECIMAL(65,30) NOT NULL DEFAULT 0.0,
+    "subtotal" DECIMAL(65,30) NOT NULL DEFAULT 0.0,
     "fechacreacion" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "idOrdenServicio" INTEGER NOT NULL,
-    "idRepuesto" INTEGER NOT NULL,
+    "id_ordenservicio" INTEGER NOT NULL,
+    "id_repuesto" INTEGER NOT NULL,
 
     CONSTRAINT "detalle_servicio_pkey" PRIMARY KEY ("id")
 );
@@ -106,7 +93,7 @@ ALTER TABLE "orden_servicio" ADD CONSTRAINT "orden_servicio_id_vehiculo_fkey" FO
 ALTER TABLE "vehiculo" ADD CONSTRAINT "vehiculo_id_cliente_fkey" FOREIGN KEY ("id_cliente") REFERENCES "cliente"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "detalle_servicio" ADD CONSTRAINT "detalle_servicio_idOrdenServicio_fkey" FOREIGN KEY ("idOrdenServicio") REFERENCES "orden_servicio"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "detalle_servicio" ADD CONSTRAINT "detalle_servicio_id_ordenservicio_fkey" FOREIGN KEY ("id_ordenservicio") REFERENCES "orden_servicio"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "detalle_servicio" ADD CONSTRAINT "detalle_servicio_idRepuesto_fkey" FOREIGN KEY ("idRepuesto") REFERENCES "repuesto"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "detalle_servicio" ADD CONSTRAINT "detalle_servicio_id_repuesto_fkey" FOREIGN KEY ("id_repuesto") REFERENCES "repuesto"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
