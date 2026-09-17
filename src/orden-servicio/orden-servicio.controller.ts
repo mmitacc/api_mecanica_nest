@@ -42,8 +42,8 @@ export class OrdenServicioController {
     return this.ordenesService.remove(+id);
   }
 
-  @Get('/reporte')
+  @Post('/reporte')
   getReporte(@Body() fechas: inputFechas) {
-    return this.ordenesService.getReporte(new inputFechas);
+    return this.ordenesService.getReporte(fechas);
   }
 }
