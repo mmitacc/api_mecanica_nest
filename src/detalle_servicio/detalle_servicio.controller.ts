@@ -3,9 +3,14 @@ import { DetalleServicioService } from './detalle_servicio.service.js';
 import {Get} from "@nestjs/common"
 import { CrateDetalleDto } from './dto/createdetalle.dto.js';
 import { UpdateDetalleDto } from './dto/updatedetalle.dto.js';
-
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
 
 @Controller('detalle-servicio')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('MECANICO','DUEÑO')
 export class DetalleServicioController {
     constructor(private readonly DetalleServicioService:DetalleServicioService){}
     @Get()
