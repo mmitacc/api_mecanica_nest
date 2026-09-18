@@ -7,6 +7,7 @@ import {
   IsNotEmpty,
   IsEmail,
   IsEnum,
+  IsOptional,
 } from 'class-validator';
 
 export class CreateUsuarioDto {
@@ -61,7 +62,7 @@ export class CreateUsuarioDto {
   })
   readonly password: string;
 
-  @IsNotEmpty({ message: "El 'role' es obligatorio." })
+  @IsOptional()
   @IsEnum(Role, {
     message: `El 'role' debe ser uno de los siguientes valores: ${Object.values(Role).join(', ')}`,
   })

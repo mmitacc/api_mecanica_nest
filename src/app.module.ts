@@ -9,6 +9,7 @@ import { OrdenServicioModule } from './orden-servicio/orden-servicio.module.js';
 import { UsuarioModule } from './usuario/usuario.module.js';
 import { VehiculosModule } from './vehiculos/vehiculos.module.js';
 import { RepuestosModule } from './repuestos/repuestos.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -28,6 +29,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     UsuarioModule,
     VehiculosModule,
     RepuestosModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
