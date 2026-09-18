@@ -28,7 +28,7 @@ export class OrdenServicioController {
   }
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('DUEÑO', 'RECEPCIONISTA')
-  @Get()
+  @Get('/todas/')
   findAll() {
     return this.ordenesService.findAll();
   }
