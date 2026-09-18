@@ -245,17 +245,17 @@ export type VehiculoOrderByWithRelationInput = {
 
 export type VehiculoWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  placa?: string
   AND?: Prisma.VehiculoWhereInput | Prisma.VehiculoWhereInput[]
   OR?: Prisma.VehiculoWhereInput[]
   NOT?: Prisma.VehiculoWhereInput | Prisma.VehiculoWhereInput[]
-  placa?: Prisma.StringFilter<"Vehiculo"> | string
   marca?: Prisma.StringFilter<"Vehiculo"> | string
   modelo?: Prisma.StringFilter<"Vehiculo"> | string
   idCliente?: Prisma.IntFilter<"Vehiculo"> | number
   fechacreacion?: Prisma.DateTimeFilter<"Vehiculo"> | Date | string
   orden_servicios?: Prisma.OrdenServicioListRelationFilter
   clientes?: Prisma.XOR<Prisma.ClienteScalarRelationFilter, Prisma.ClienteWhereInput>
-}, "id">
+}, "id" | "placa">
 
 export type VehiculoOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

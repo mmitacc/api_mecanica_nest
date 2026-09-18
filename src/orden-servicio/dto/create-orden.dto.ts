@@ -44,16 +44,17 @@ export class CreateOrdenDto {
     { maxDecimalPlaces: 2 },
     { message: 'El total debe ser un numero de hasta dos decimales' },
   )
-  @IsPositive({ message: 'El total debe ser positivo' })
+  @IsPositive({ message: 'El total debe ser un número positivo' })
   total?: number;
   @IsNotEmpty({ message: 'El idUsuario es obligatorio' })
   @Type(() => Number)
   @IsInt({ message: 'El idUsuario debe ser un número entero' })
-  @IsPositive({ message: 'El idUsuario debe ser positivo' })
+  @IsPositive({ message: 'El idUsuario debe ser un número positivo' })
+
   idUsuario: number;
   @IsNotEmpty({ message: 'El idVehiculo es obligatorio' })
   @Type(() => Number)
   @IsInt({ message: 'El idVehiculo debe ser un número entero' })
-  @IsPositive({ message: 'El idUsuario debe ser positivo' })
+  @IsPositive({ message: 'El idVehiculo debe ser un número positivo' })
   idVehiculo: number;
 }

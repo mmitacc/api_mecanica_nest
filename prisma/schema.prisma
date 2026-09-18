@@ -24,14 +24,13 @@ enum EstadoServicio {
   LISTO
 }
 
-
 model Usuario {
   id            Int      @id @default(autoincrement())
   nombres       String
   apellidos     String
   email         String   @unique
   password      String   @map("password_hash")
-  role          Role     @default(RECEPCIONISTA)
+  role          Role?     @default(RECEPCIONISTA)
   fechacreacion DateTime @default(now())
 
   // Relaciones inversas
@@ -63,7 +62,7 @@ model OrdenServicio {
 
 model Vehiculo {
   id            Int      @id @default(autoincrement())
-  placa         String
+  placa         String   @unique
   marca         String
   modelo        String
   idCliente     Int      @map("id_cliente")
@@ -83,8 +82,8 @@ model DetalleServicio {
   cantidad        Int      @default(0)
   subTotal        Decimal  @default(0.0) @map("subtotal")
   fechacreacion   DateTime @default(now())
-  idOrdenServicio Int @map("id_ordenservicio")
-  idRepuesto      Int @map("id_repuesto")
+  idOrdenServicio Int      @map("id_ordenservicio")
+  idRepuesto      Int      @map("id_repuesto")
 
   // Relacion de un detalle servicio pertenece a una orden servicio
   orden_servicios OrdenServicio @relation(fields: [idOrdenServicio], references: [id], onDelete: Restrict)
@@ -106,6 +105,8 @@ model Repuesto {
 
   @@map("repuesto")
 }
+
+
 
 model Cliente {
   id            Int      @id @default(autoincrement())
