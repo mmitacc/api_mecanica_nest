@@ -29,7 +29,15 @@ export class OrdenService {
     }
     return user;
   }
-
+  async findbyMech(idUsuario: number) {
+    const user = await this.prisma.ordenServicio.findMany({
+      where: { idUsuario },
+    });
+    if (!user) {
+      throw new NotFoundException(`Orden de ID: ${idUsuario} no encontrado`);
+    }
+    return user;
+  }
   async update(id: number, UpdateOrdenDto: UpdateOrdenDto) {
     return await this.prisma.ordenServicio.update({
       where: { id },

@@ -9,6 +9,7 @@ import {
   IsInt,
   IsIn,
   Max,
+  MaxLength,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { EstadoServicio } from '../../generated/prisma/enums.js';
@@ -20,7 +21,7 @@ export class CreateOrdenDto {
   @Matches(/\S/, {
     message: 'La descripcion  no puede contener solo espacios',
   })
-  @Max(100, { message: 'El limite máximo son 100 caracteres' })
+  @MaxLength(100, { message: 'El limite máximo son 100 caracteres' })
   descripcion: string;
   @IsOptional()
   @Type(() => Number)
@@ -50,7 +51,6 @@ export class CreateOrdenDto {
   @Type(() => Number)
   @IsInt({ message: 'El idUsuario debe ser un número entero' })
   @IsPositive({ message: 'El idUsuario debe ser un número positivo' })
-
   idUsuario: number;
   @IsNotEmpty({ message: 'El idVehiculo es obligatorio' })
   @Type(() => Number)
