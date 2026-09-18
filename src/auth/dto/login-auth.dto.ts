@@ -29,8 +29,6 @@ export class LoginAuthDto {
   @MaxLength(50, {
     message: 'El "password" no debe superar los 50 caracteres.',
   })
-  @Matches(/\$/, {
-    message: 'El "password" no debe tener solo espacios vacios.',
-  })
+  @Matches(/\S/, { message: 'El "password" no debe tener solo espacios vacíos.',})
   readonly password: string;
 }

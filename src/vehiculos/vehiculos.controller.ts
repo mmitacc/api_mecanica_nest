@@ -7,13 +7,20 @@ import {
   Put,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 
 import { VehiculosService } from './vehiculos.service.js';
 import { CreateVehiculoDto } from './dto/create-vehiculo.dto.js';
 import { UpdateVehiculoDto } from './dto/update-vehiculo.dto.js';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
+
 
 @Controller('vehiculos')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('RECEPCIONISTA', 'DUEÑO')
 export class VehiculosController {
   constructor(private readonly vehiculosService: VehiculosService) {}
 
