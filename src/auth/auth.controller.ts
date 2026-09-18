@@ -23,6 +23,7 @@ export class AuthController {
   }
 
   // Trae los datos del usuario logeado
+  @UseGuards(JwtAuthGuard)
   @Get('profile')
   async profile(@Req() req: Request & { user: unknown }) {
     return req.user;
