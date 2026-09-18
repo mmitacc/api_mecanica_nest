@@ -7,13 +7,19 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 
 import { RepuestosService } from './repuestos.service.js';
 import { CreateRepuestoDto } from './dto/create-repuesto.dto.js';
 import { UpdateRepuestoDto } from './dto/update-repuesto.dto.js';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
 
 @Controller('repuestos')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('DUEÑO')
 export class RepuestosController {
   constructor(private readonly repuestosService: RepuestosService) {}
 
@@ -33,7 +39,10 @@ export class RepuestosController {
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number,@Body() updateRepuestoDto: UpdateRepuestoDto,) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateRepuestoDto: UpdateRepuestoDto,
+  ) {
     return this.repuestosService.update(id, updateRepuestoDto);
   }
 
